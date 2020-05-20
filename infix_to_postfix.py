@@ -2,48 +2,22 @@ from typing import List, Any
 
 
 class Stack:
-    """A last-in-first-out (LIFO) stack of items.
-    Stores data in first-in, last-out order. When removing an item from the
-    stack, the most recently-added item is the one that is removed.
-    """
-    # === Private Attributes ===
-    # _items:
-    # The items stored in the stack. The end of the list represents
-    # the top of the stack.
+
     _items: List
 
     def __init__(self) -> None:
-        """Initialize a new empty stack.
-        """
         self._items = []
 
     def is_empty(self) -> bool:
-        """Return whether this stack contains no items.
-        >>> s = Stack()
-        >>> s.is_empty()
-        True
-        >>> s.push('hello')
-        >>> s.is_empty()
-        False
-        """
         return self._items == []
 
     def top(self):
         return self._items[-1]
 
     def push(self, item: Any) -> None:
-        """Add a new element to the top of this stack.
-        """
         self._items.append(item)
 
     def pop(self) -> Any:
-        """Remove and return the element at the top of this stack.
-        >>> s = Stack()
-        >>> s.push('hello')
-        >>> s.push('goodbye')
-        >>> s.pop()
-        'goodbye'
-        """
         return self._items.pop()
 
 
@@ -52,28 +26,48 @@ def InfixToPostfix(exp: str):
 
     S = Stack()
     postfix = ""
+    j = 0
     for i in range(len(exp)):
         if is_operand(exp[i]):
-            postfix += exp[i]
+            if i + 1 <= len(exp) - 1 and is_operand(exp[i+1]):
+                continue
+            else:
+                j = i
+                while j - 1 >= 0 and not is_operator(exp[j - 1]):
+                    if is_operand(exp[j]):
+                        j -= 1
+                    else:
+                        break
+            postfix += exp[j:i + 1] + " "
         elif is_operator(exp[i]):
             while not S.is_empty() and S.top() != "(" and HasHigherPrecedence(S.top(), exp[i]):
-                postfix += S.top()
+                if is_operator(S.top()):
+                    postfix += S.top() + " "
+                else:
+                    postfix += S.top()
                 S.pop()
             S.push(exp[i])
         elif exp[i] == "(":
             S.push(exp[i])
         elif exp[i] == ")":
             while not S.is_empty() and S.top() != "(":
-                postfix += S.top()
+                if is_operator(S.top()):
+                    postfix += S.top() + " "
+                else:
+                    postfix += S.top()
                 S.pop()
         else:
             print("There's an invalid character")
             return
+
     while not S.is_empty():
         if S.top() == '(':
             S.pop()
             continue
-        postfix += S.top()
+        if is_operator(S.top()):
+            postfix += S.top() + " "
+        else:
+            postfix += S.top()
         S.pop()
 
     return postfix
@@ -96,7 +90,7 @@ def is_operator(exp: str):
     return exp == '+' or exp == '-' or exp == '/' or exp == '*'
 
 def is_operand(exp: str):
-    return exp.isalnum()
+    return exp.isdigit()
 
 
 
