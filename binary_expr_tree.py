@@ -3,11 +3,7 @@ from typing import Any, List, Optional, Tuple, Union
 import infix_to_postfix
 
 class BinaryExprTree:
-    """Binary Search Tree class.
-    This class represents a binary tree satisfying the Binary Search Tree
-    property: for every node, its value is >= all items stored in its left
-    subtree, and <= all items stored in its right subtree.
-    """
+
     # === Private Attributes ===
     # The item stored at the root of the tree, or None if the tree is empty.
     _root: Optional[Any]
@@ -16,17 +12,7 @@ class BinaryExprTree:
     # The right subtree, or None if the tree is empty.
     _right: Optional[BinaryExprTree]
 
-    # === Representation Invariants ===
-    # - If _root is None, then so are _left and _right.
-    # This represents an empty BST.
-    # - If _root is not None, then _left and _right are BinarySearchTrees.
-    # - (BST Property) All items in _left are <= _root,
-    # and all items in _right are >= _root.
-
     def __init__(self, root: Optional[Any]) -> None:
-        """Initialize a new BST containing only the given root value.
-        If <root> is None, initialize an empty BST.
-        """
 
         if root is None:
             self._root = None
