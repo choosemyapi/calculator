@@ -43,15 +43,21 @@ class BinaryExprTree:
 
         return self._root is None
 
-    def __len__(self) -> int:
+    def __str__(self) -> str:
+        return self._str_indented()
 
+    def _str_indented(self, depth: int = 0) -> str:
+        """Return an indented string representation of this tree.
+
+        The indentation level is specified by the <depth> parameter.
+        """
         if self.is_empty():
-            return 0
+            return ''
         else:
-            size = 1  # count the root
-            for subtree in self._subtrees:
-                size += subtree.__len__()  # could also do len(subtree) here
-            return size
+            s = '  ' * depth + str(self._root) + '\n'
+            s += self._left._str_indented(depth + 1)
+            s += self._right._str_indented(depth + 1)
+            return s
 
 
 
@@ -71,7 +77,7 @@ def build_tree(postfix: str):
            tree._left = left
            tree._right = right
 
-           S.append(tree)
+           S.push(tree)
 
     expr_tree = S.pop()
     return expr_tree

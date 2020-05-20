@@ -3,3 +3,5 @@ planning for calculator.txt
 scratch.py
 
 .DS_Store
+
+__pycache__/
