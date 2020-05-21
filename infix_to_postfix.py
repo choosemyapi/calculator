@@ -33,7 +33,7 @@ def InfixToPostfix(exp: str):
                 continue
             else:
                 j = i
-                while j - 1 >= 0 and not is_operator(exp[j - 1]):
+                while j - 1 >= 0 and is_operand(exp[j - 1]):
                     if is_operand(exp[j]):
                         j -= 1
                     else:

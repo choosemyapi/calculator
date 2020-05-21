@@ -4,12 +4,8 @@ import infix_to_postfix
 
 
 class BinaryExprTree:
-    # === Private Attributes ===
-    # The item stored at the root of the tree, or None if the tree is empty.
     _root: Optional[Any]
-    # The left subtree, or None if the tree is empty.
     _left: Optional[BinaryExprTree]
-    # The right subtree, or None if the tree is empty.
     _right: Optional[BinaryExprTree]
 
     def __init__(self, root: Optional[Any]) -> None:
@@ -20,8 +16,8 @@ class BinaryExprTree:
             self._right = None
         else:
             self._root = root
-            self._left = BinaryExprTree(None)  # self._left is an empty BST
-            self._right = BinaryExprTree(None)  # self._right is an empty BST
+            self._left = BinaryExprTree(None)
+            self._right = BinaryExprTree(None)
 
     def is_empty(self) -> bool:
 
@@ -31,10 +27,7 @@ class BinaryExprTree:
         return self._str_indented()
 
     def _str_indented(self, depth: int = 0) -> str:
-        """Return an indented string representation of this tree.
 
-        The indentation level is specified by the <depth> parameter.
-        """
         if self.is_empty():
             return ''
         else:
@@ -66,13 +59,13 @@ def build_tree(postfix: str):
 
     for i in range(len(postfix)):
         if infix_to_postfix.is_operand(postfix[i]):
-            j = i
-            while j + 1 <= len(postfix) - 1:
-                if infix_to_postfix.is_operand(postfix[j]):
-                    j += 1
-                else:
-                    break
-            node = BinaryExprTree(postfix[i:j + 1])
+            if i + 1 <= len(postfix) - 1 and postfix[i + 1] != " ":
+                continue
+            else:
+                j = i
+                while j - 1 >= 0 and infix_to_postfix.is_operand(postfix[j - 1]):
+                    j -= 1
+            node = BinaryExprTree(postfix[j:i + 1])
             S.push(node)
         elif infix_to_postfix.is_operator(postfix[i]):
             tree = BinaryExprTree(postfix[i])
