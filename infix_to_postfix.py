@@ -90,7 +90,7 @@ def is_operator(exp: str):
     return exp == '+' or exp == '-' or exp == '/' or exp == '*'
 
 def is_operand(exp: str):
-    return exp.isdigit()
+    return exp.isdigit() or exp == "."
 
 
 

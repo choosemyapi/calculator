@@ -39,7 +39,7 @@ class BinaryExprTree:
     def calculate(self):
 
         if not self.is_empty():
-            if self._root.isdigit():
+            if not infix_to_postfix.is_operator(self._root):
                 return float(self._root)
             else:
                 A = self._left.calculate()
@@ -84,6 +84,7 @@ def build_tree(postfix: str):
 
 
 if __name__ == "__main__":
-    postfix = infix_to_postfix.InfixToPostfix("10*5+3")
+    postfix = infix_to_postfix.InfixToPostfix("10.5*5+3")
+    print(postfix)
     tree = build_tree(postfix)
     print(tree.calculate())
