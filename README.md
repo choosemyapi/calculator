@@ -1,0 +1,1 @@
+This program will take a basic numerical expression with floats/integers and the + - / * operators and return the result. It works by converting the expression string from infix to postfix, and then generating a binary expression tree from the result which is then traversed to evaluate the expression.
