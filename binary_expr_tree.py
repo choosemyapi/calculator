@@ -88,9 +88,9 @@ if __name__ == "__main__":
     expr = input("Enter the expression you want to evaluate (floats only, + - * / supported): ")
     while expr.lower() != "n":
         postfix = infix_to_postfix.InfixToPostfix(expr)
-        print(postfix)
+        # print(postfix)
         binExprTree = build_tree(postfix)
-        print(binExprTree)
+        # print(binExprTree)
         print(binExprTree.evaluate())
         expr = input("Enter the expression you want to evaluate (floats only, + - * / supported): ")
     print("You've cancelled the operation. Restart to enter again.")
