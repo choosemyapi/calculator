@@ -76,7 +76,7 @@ def InfixToPostfix(exp: str):
 def HasHigherPrecedence(op1: str, op2: str):
     op1_weight = get_operator_weight(op1)
     op2_weight = get_operator_weight(op2)
-    return op1_weight > op2_weight
+    return op1_weight >= op2_weight
 
 def get_operator_weight(op: str) -> int:
     weight = -1

@@ -36,14 +36,14 @@ class BinaryExprTree:
             s += self._right._str_indented(depth + 1)
             return s
 
-    def calculate(self):
+    def evaluate(self):
 
         if not self.is_empty():
             if not infix_to_postfix.is_operator(self._root):
                 return float(self._root)
             else:
-                A = self._left.calculate()
-                B = self._right.calculate()
+                A = self._left.evaluate()
+                B = self._right.evaluate()
                 if self._root == "+":
                     return A + B
                 elif self._root == "-":
@@ -65,8 +65,8 @@ def build_tree(postfix: str):
                 j = i
                 while j - 1 >= 0 and infix_to_postfix.is_operand(postfix[j - 1]):
                     j -= 1
-            node = BinaryExprTree(postfix[j:i + 1])
-            S.push(node)
+                node = BinaryExprTree(postfix[j:i + 1])
+                S.push(node)
         elif infix_to_postfix.is_operator(postfix[i]):
             tree = BinaryExprTree(postfix[i])
             right = S.pop()
@@ -84,7 +84,13 @@ def build_tree(postfix: str):
 
 
 if __name__ == "__main__":
-    postfix = infix_to_postfix.InfixToPostfix("10.5*5+3")
-    print(postfix)
-    tree = build_tree(postfix)
-    print(tree.calculate())
+    print("Welcome to the Calculator. Enter 'N' to stop.")
+    expr = input("Enter the expression you want to evaluate (floats only, + - * / supported): ")
+    while expr.lower() != "n":
+        postfix = infix_to_postfix.InfixToPostfix(expr)
+        print(postfix)
+        binExprTree = build_tree(postfix)
+        print(binExprTree)
+        print(binExprTree.evaluate())
+        expr = input("Enter the expression you want to evaluate (floats only, + - * / supported): ")
+    print("You've cancelled the operation. Restart to enter again.")
